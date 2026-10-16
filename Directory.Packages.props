@@ -5,14 +5,14 @@
   </PropertyGroup>
   <ItemGroup>
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub">
-      <Version>10.0.300</Version>
+      <Version>10.0.402</Version>
     </GlobalPackageReference>
     <GlobalPackageReference Include="PolySharp">
       <Version>1.16.0</Version>
     </GlobalPackageReference>
     <GlobalPackageReference Include="FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference">
       <ProjectReference>$(MSBuildThisFileDirectory).submodules\fredrikhr\powerplatform-sdk-extensions\.submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference\FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference.csproj</ProjectReference>
-      <Version>1.0.1</Version>
+      <Version>1.0.2</Version>
     </GlobalPackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -35,7 +35,7 @@
         FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage;
         FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution;
         "
-      Version="2.8.1"
+      Version="2.12.2"
     />
   </ItemGroup>
   <ItemGroup>
