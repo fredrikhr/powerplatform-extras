@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PowerPlatformTargetSolutionFolder Include="..\..\powerplatform\PowerPlatformRuntimeExtensions" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference
       Include="
         FredrikHr.NupkgMSBuild.PackPackageReference;
