@@ -29,6 +29,9 @@
     <ProjectReference Include="..\..\.submodules\fredrikhr\powerplatform-sdk-extensions\libraries\FredrikHr.PowerPlatformSdkExtensions.ApiDiscovery\FredrikHr.PowerPlatformSdkExtensions.ApiDiscovery.csproj">
       <Pack>true</Pack>
     </ProjectReference>
+    <ProjectReference Include="..\..\.submodules\fredrikhr\powerplatform-sdk-extensions\libraries\FredrikHr.PowerPlatformSdkExtensions.PluginRuntime\FredrikHr.PowerPlatformSdkExtensions.PluginRuntime.csproj">
+      <Pack>true</Pack>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

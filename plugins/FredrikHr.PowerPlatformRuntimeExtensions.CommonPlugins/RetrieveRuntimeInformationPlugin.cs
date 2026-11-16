@@ -1,12 +1,14 @@
 ﻿using System.Reflection;
 
+using FredrikHr.PowerPlatformSdkExtensions.PluginRuntime;
+
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerApps.CoreFramework.PowerPlatform.Api;
 using Microsoft.Xrm.Sdk.Organization;
 
 namespace FredrikHr.PowerPlatformRuntimeExtensions.CommonPlugins;
 
-public class RetrieveRuntimeInformationPlugin : IPlugin
+public class RetrieveRuntimeInformationPlugin() : PluginBase(), IPlugin
 {
     internal static class OutputParameterNames
     {
@@ -17,81 +19,13 @@ public class RetrieveRuntimeInformationPlugin : IPlugin
         public const string PowerPlatformApiDiscovery = nameof(PowerPlatformApiDiscovery);
     }
 
-    private static readonly HashSet<string> KnownAssemblyNames = new([
-        "CoreFramework.CapCoreServices.TopologyModel"
-    ], StringComparer.OrdinalIgnoreCase);
-
-    private ITracingService? _trace;
-
-    public RetrieveRuntimeInformationPlugin()
-    {
-        AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
-        {
-            if (string.IsNullOrEmpty(args.Name)) return null;
-            Assembly? loadedAssembly;
-            try
-            {
-                AssemblyName name = new(args.Name);
-                if (!KnownAssemblyNames.Contains(name.Name)) return null;
-
-                string filename = $"{name.Name}.dll";
-                string filepath = Path.Combine(Environment.CurrentDirectory, filename);
-                if (File.Exists(filepath))
-                {
-                    loadedAssembly = Assembly.LoadFile(filepath);
-                    TraceAssemblyLoading(name, loadedAssembly, _trace);
-                    return loadedAssembly;
-                }
-
-                string cultureDirectory = System.Globalization.CultureInfo.CurrentCulture.Name;
-                filepath = Path.Combine(Environment.CurrentDirectory, cultureDirectory, filename);
-                if (File.Exists(filepath))
-                {
-                    loadedAssembly = Assembly.LoadFile(filepath);
-                    TraceAssemblyLoading(name, loadedAssembly, _trace);
-                    return loadedAssembly;
-                }
-
-                cultureDirectory = "en-US";
-                filepath = Path.Combine(Environment.CurrentDirectory, cultureDirectory, filename);
-                if (File.Exists(filepath))
-                {
-                    loadedAssembly = Assembly.LoadFile(filepath);
-                    TraceAssemblyLoading(name, loadedAssembly, _trace);
-                    return loadedAssembly;
-                }
-            }
-#pragma warning disable CA1031 // Do not catch general exception types
-            catch (Exception) { return null; }
-#pragma warning restore CA1031 // Do not catch general exception types
-
-            return null;
-        };
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1031: Do not catch general exception types",
-            Justification = nameof(ITracingService)
-        )]
-        static void TraceAssemblyLoading(AssemblyName requestedName, Assembly? loadedAssembly, ITracingService? trace)
-        {
-            try
-            {
-                trace?.Trace("Resolving known assembly name '{0}' -> Loaded assembly '{1}'.", requestedName, loadedAssembly?.GetName());
-            }
-            catch (Exception)
-            {
-                // Do not do anything here on purpose.
-            }
-        }
-    }
-
-    public void Execute(IServiceProvider serviceProvider)
+    protected override void ExecuteCore(
+        IServiceProvider serviceProvider,
+        PluginExecutionInformation info)
     {
         var context = serviceProvider.Get<IPluginExecutionContext7>();
         var envInfo = serviceProvider.Get<IEnvironmentService>();
         ParameterCollection outputs = context.OutputParameters;
-        _trace = serviceProvider.Get<ITracingService>();
         var orgService = serviceProvider.GetOrganizationService(context.UserId);
 
         outputs[OutputParameterNames.EnvironmentInfo] =

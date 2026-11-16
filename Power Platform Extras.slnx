@@ -16,6 +16,7 @@
   <Folder Name="/.submodules/fredrikhr/" />
   <Folder Name="/.submodules/fredrikhr/powerplatform-sdk-extensions/">
     <Project Path=".submodules/fredrikhr/powerplatform-sdk-extensions/libraries/FredrikHr.PowerPlatformSdkExtensions.ApiDiscovery/FredrikHr.PowerPlatformSdkExtensions.ApiDiscovery.csproj" />
+    <Project Path=".submodules/fredrikhr/powerplatform-sdk-extensions/libraries/FredrikHr.PowerPlatformSdkExtensions.PluginRuntime/FredrikHr.PowerPlatformSdkExtensions.PluginRuntime.csproj" />
   </Folder>
   <Folder Name="/plugins/">
     <File Path="plugins/Directory.Build.props" />
